@@ -21,7 +21,6 @@ const App = () => {
     isLoading,
   } = useApi("https://pokeapi.co/api/v2/pokemon/?limit=50", mapResults);
 
-  console.log("Filed lint");
   if (isLoading) {
     return <LoadingSpinner />;
   }
