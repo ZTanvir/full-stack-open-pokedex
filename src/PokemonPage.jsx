@@ -7,6 +7,7 @@ import ErrorMessage from "./ErrorMessage";
 
 const formatName = (nameWithDash) => nameWithDash.replace("-", " ");
 
+// the is the component for Pokemon Page
 const PokemonPage = ({ previous, next }) => {
   const { name } = useParams();
   const {
