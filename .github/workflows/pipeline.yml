@@ -30,7 +30,7 @@ jobs:
       #   run: npm run test
       - uses: actions/checkout@v2
 
-  check_#next_in_commit_msg:
+  check_next_in_commit_msg:
     runs-on: ubuntu-latest
     outputs:
       tag_release_can_run: ${{ steps.final.outcome == 'success' }}
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: ${{ needs.check_#next_in_commit_msg.outputs.tag_release_can_run == 'true'  }}
+    if: ${{ needs.check_next_in_commit_msg.outputs.tag_release_can_run == 'true'  }}
     steps:
       - uses: actions/checkout@v4
         with:
