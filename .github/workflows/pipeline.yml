@@ -11,7 +11,7 @@ on:
 
 env:
   COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-  CONDITION: ${{contains($COMMIT_MESSAGES,"#next")}}
+  CONDITION: ${{contains(env.COMMIT_MESSAGES,"#next")}}
 
 jobs:
   simple_deployment_pipeline:
