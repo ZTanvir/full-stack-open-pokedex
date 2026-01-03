@@ -9,6 +9,10 @@ on:
     branches: [main]
     types: [opened, synchronize]
 
+env:
+  COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+  CONDITION: ${{contains($COMMIT_MESSAGES,"#next")}}
+
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
@@ -27,11 +31,21 @@ jobs:
       #   run: npm run test
       - uses: actions/checkout@v2
 
+  check_#next_in_commit_msg:
+    outputs:
+      tag_release_can_run: ${{ steps.final.outcome == "success" }}
+    steps:
+      - if: ${{env.CONDITION == "true"}}
+        # id `final` is referenced in check_#next_in_commit_msg `outputs`.
+        id: final
+        run: echo
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: ${{ needs.check_#next_in_commit_msg.outputs.tag_release_can_run == 'true'  }}
     steps:
       - uses: actions/checkout@v4
         with:
