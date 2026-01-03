@@ -11,7 +11,7 @@ on:
 
 env:
   COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-  CONDITION: ${{contains(env.COMMIT_MESSAGES,"#next")}}
+  CONDITION: ${{contains(env.COMMIT_MESSAGES,'#next')}}
 
 jobs:
   simple_deployment_pipeline:
@@ -33,9 +33,9 @@ jobs:
 
   check_#next_in_commit_msg:
     outputs:
-      tag_release_can_run: ${{ steps.final.outcome == "success" }}
+      tag_release_can_run: ${{ steps.final.outcome == 'success' }}
     steps:
-      - if: ${{env.CONDITION == "true"}}
+      - if: ${{env.CONDITION == 'true'}}
         # id `final` is referenced in check_#next_in_commit_msg `outputs`.
         id: final
         run: echo
