@@ -56,3 +56,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+
+      - name: Send success discord message
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          username: Zahirul
+          avatarUrl: https://domain/images/custom.png
+          text: New version added successFully
+          severity: info # only to make sure the embed is added
+          color: "#008000"
+          title: New version added
+          description: "Failed This is a ***SuPeR custom*** description. I hope it looks good."
+          # details: not needed because we overrode default description.
+          footer: Failed This embed was brought to you by the letter R and the number 4.
+      - name: Send failed discord message
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          username: Zahirul
+          avatarUrl: https://domain/images/custom.png
+          text: New version added successFully
+          severity: warn # only to make sure the embed is added
+          color: "#FF0000"
+          title: New version not added.Some thing failed.
+          description: "Failed This is a ***SuPeR custom*** description. I hope it looks good."
+          # details: not needed because we overrode default description.
+          footer: Failed This embed was brought to you by the letter R and the number 4.
